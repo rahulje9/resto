@@ -1,12 +1,36 @@
-import React from 'react';
-import {SafeAreaView, StyleSheet, Text, View, Image} from 'react-native';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useState} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  FlatList,
+} from 'react-native';
 import CustomHeader from '../components/customHeader/CustomHeader';
 import Rating from '../components/rating/Rating';
 import Colors from '../utils/colors';
+import dayjs from 'dayjs';
 
 const Details = ({route}) => {
   const {data} = route?.params;
-  console.log('item', data);
+  const [day] = useState(dayjs().format('dddd'));
+
+  const renderItem = (item, index) => {
+    return (
+      <View style={styles.renderItem}>
+        <View style={styles.nameAndDate}>
+          <Text style={styles.reviewerName}>{item?.name}</Text>
+          <Text style={styles.reviewDate}>{item?.date}</Text>
+        </View>
+        <Text style={styles.comments}>{item?.comments}</Text>
+        <Rating starCount={item?.rating} count />
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <CustomHeader />
@@ -19,14 +43,48 @@ const Details = ({route}) => {
           />
         </View>
         <View style={styles.detailsContainer}>
-          <Text style={styles.name}>{data?.name}</Text>
-          <Rating data={data} />
-          <Text style={styles.reviewLabel}>
-            {`${data?.reviews?.length} Reviews`}
-          </Text>
-          <Text numberOfLines={4} style={styles.address}>
-            {data?.address}
-          </Text>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            contentContainerStyle={styles.scrollView}>
+            <Text style={styles.name}>{data?.name}</Text>
+            <Rating data={data} />
+            <Text style={styles.reviewLabel}>
+              {`${data?.reviews?.length} Reviews`}
+            </Text>
+            <Text numberOfLines={4} style={styles.address}>
+              {data?.address}
+            </Text>
+
+            {Object.entries(data?.operating_hours).map(item => {
+              return (
+                <View style={styles.timeParentContainer}>
+                  <View style={styles.dayContainer}>
+                    <Text
+                      style={[
+                        styles.dayLabel,
+                        item[0] === day && styles.currentDay,
+                      ]}>
+                      {item[0]}
+                    </Text>
+                  </View>
+                  <View style={styles.timeContainer}>
+                    <Text
+                      style={[
+                        styles.timeLabel,
+                        item[0] === day && styles.currentDay,
+                      ]}>
+                      {item[1]}
+                    </Text>
+                  </View>
+                </View>
+              );
+            })}
+            <View style={styles.reviewsContainer}>
+              <Text style={styles.reviewTitle}>Reviews</Text>
+              {data?.reviews?.map((item, index) => renderItem(item, index))}
+            </View>
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>
@@ -82,5 +140,77 @@ const styles = StyleSheet.create({
     color: '#5c5c5c',
     width: '60%',
     marginTop: 15,
+    marginBottom: 20,
+  },
+  scrollView: {
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+  },
+  timeParentContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingVertical: 5,
+    borderBottomWidth: 0.6,
+    borderBottomColor: '#d4d6d4',
+  },
+  dayContainer: {
+    flex: 0.3,
+  },
+  timeContainer: {
+    flex: 0.4,
+  },
+  dayLabel: {
+    fontSize: 16,
+    fontFamily: 'Inter-Medium',
+    color: '#5c5c5c',
+  },
+  timeLabel: {
+    fontSize: 16,
+    fontFamily: 'Inter-Regular',
+    color: '#5c5c5c',
+  },
+  currentDay: {
+    color: 'green',
+    fontFamily: 'Inter-Bold',
+  },
+  reviewsContainer: {
+    marginTop: 20,
+  },
+  reviewTitle: {
+    fontSize: 16,
+    fontFamily: 'Inter-Regular',
+    color: '#5c5c5c',
+    marginBottom: 15,
+  },
+  renderItem: {
+    width: '75%',
+    borderBottomWidth: 0.6,
+    borderBottomColor: '#d4d6d4',
+    paddingBottom: 5,
+    marginBottom: 10,
+  },
+  nameAndDate: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
+  reviewerName: {
+    fontSize: 18,
+    fontFamily: 'Inter-Regular',
+    color: '#5c5c5c',
+  },
+  reviewDate: {
+    fontSize: 16,
+    fontFamily: 'Inter-Regular',
+    color: '#5c5c5c',
+  },
+  comments: {
+    marginBottom: 5,
+    fontSize: 14,
+    fontFamily: 'Inter-Regular',
+    color: '#5c5c5c',
+    fontStyle: 'italic',
   },
 });

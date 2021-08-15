@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 
-const Rating = ({data}) => {
+const Rating = ({data, starCount, count = false}) => {
   const generateRating = () => {
     const dummyArr = [0, 0, 0, 0, 0];
     const total = data?.reviews?.reduce((acc, r) => acc + r?.rating ?? 0, 0);
@@ -11,7 +11,7 @@ const Rating = ({data}) => {
         {dummyArr.map((_, i) => {
           return (
             <View style={styles.starContainer}>
-              {i + 1 <= avg ? (
+              {(count ? i < starCount : i + 1 <= avg) ? (
                 <Image
                   source={require('../../../assets/images/fullstar.png')}
                 />

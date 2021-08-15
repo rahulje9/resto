@@ -19,7 +19,7 @@ const Home = ({navigation}) => {
   // console.log({data});
 
   const renderItem = ({item, index}) => {
-    return <Card item={item} index={index} />;
+    return <Card item={item} index={index} key={index} />;
   };
 
   const ListHeaderComponent = () => (
