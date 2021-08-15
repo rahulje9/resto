@@ -3,6 +3,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import Details from '../screen/Details';
 import Home from '../screen/Home';
+import Search from '../screen/Search';
 
 const Stack = createStackNavigator();
 
@@ -15,6 +16,7 @@ const Router = () => {
         }}>
         <Stack.Screen name={'Home'} component={Home} />
         <Stack.Screen name={'Details'} component={Details} />
+        <Stack.Screen name={'Search'} component={Search} />
       </Stack.Navigator>
     </NavigationContainer>
   );

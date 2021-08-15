@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import Card from '../components/card/Card';
 import SearchCard from '../components/searchCard/SearchCard';
@@ -27,26 +19,21 @@ const Home = () => {
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
-      <KeyboardAvoidingView style={styles.flexOne}>
-        <ScrollView
-          bounces={false}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.flexOne}>
-          <View style={styles.container}>
-            <SearchCard />
+      <View style={styles.flexOne}>
+        <View style={styles.container}>
+          <SearchCard />
 
-            <FlatList
-              bounces={false}
-              showsVerticalScrollIndicator={false}
-              data={data?.restaurants ?? []}
-              ListHeaderComponent={ListHeaderComponent}
-              ListFooterComponent={ListFooterComponent}
-              renderItem={renderItem}
-              keyExtractor={(_, index) => index?.toString()}
-            />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          <FlatList
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            data={data?.restaurants ?? []}
+            ListHeaderComponent={ListHeaderComponent}
+            ListFooterComponent={ListFooterComponent}
+            renderItem={renderItem}
+            keyExtractor={(_, index) => index?.toString()}
+          />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };

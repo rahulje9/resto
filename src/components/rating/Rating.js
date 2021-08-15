@@ -10,7 +10,7 @@ const Rating = ({data, starCount, count = false}) => {
       <View style={styles.ratingView}>
         {dummyArr.map((_, i) => {
           return (
-            <View style={styles.starContainer}>
+            <View key={i} style={styles.starContainer}>
               {(count ? i < starCount : i + 1 <= avg) ? (
                 <Image
                   source={require('../../../assets/images/fullstar.png')}

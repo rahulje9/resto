@@ -1,12 +1,20 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 const SearchCard = () => {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate('Search');
+      }}
+      activeOpacity={0.5}
+      style={styles.container}>
       <Text style={styles.searchIcon}>🔍</Text>
       <Text style={styles.input}>Search...</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

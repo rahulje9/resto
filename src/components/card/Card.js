@@ -13,29 +13,6 @@ const Card = ({item, index}) => {
     return _colors[rndInt];
   };
 
-  const generateRating = data => {
-    const dummyArr = [0, 0, 0, 0, 0];
-    const total = data?.reduce((acc, r) => acc + r?.rating ?? 0, 0);
-    const avg = Math.trunc(total / 3);
-    return (
-      <View style={styles.ratingView}>
-        {dummyArr.map((_, i) => {
-          return (
-            <View style={styles.starContainer}>
-              {i + 1 <= avg ? (
-                <Image
-                  source={require('../../../assets/images/fullstar.png')}
-                />
-              ) : (
-                <Image source={require('../../../assets/images/star.png')} />
-              )}
-            </View>
-          );
-        })}
-      </View>
-    );
-  };
-
   return (
     <TouchableOpacity
       activeOpacity={0.5}
