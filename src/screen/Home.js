@@ -1,29 +1,52 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {
+  FlatList,
+  KeyboardAvoidingView,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  KeyboardAvoidingView,
-  ScrollView,
-  TextInput,
 } from 'react-native';
+import {useSelector} from 'react-redux';
+import Card from '../components/card/Card';
 import SearchCard from '../components/searchCard/SearchCard';
-import Colors from '../utils/colors';
-import {useDispatch, useSelector} from 'react-redux';
 
 const Home = ({navigation}) => {
   const [search, setsearch] = useState('');
   const data = useSelector(state => state?.commonReducer?.restoList);
-  console.log({data});
+  // console.log({data});
+
+  const renderItem = ({item, index}) => {
+    return <Card item={item} index={index} />;
+  };
+
+  const ListHeaderComponent = () => (
+    <Text style={styles.header}>Restaurants List</Text>
+  );
+
+  const ListFooterComponent = () => <View style={styles.footer} />;
 
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <KeyboardAvoidingView style={styles.flexOne}>
-        <ScrollView contentContainerStyle={styles.flexOne}>
+        <ScrollView
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.flexOne}>
           <View style={styles.container}>
             <SearchCard value={search} onChange={e => setsearch(e)} />
+
+            <FlatList
+              bounces={false}
+              showsVerticalScrollIndicator={false}
+              data={data?.restaurants ?? []}
+              ListHeaderComponent={ListHeaderComponent}
+              ListFooterComponent={ListFooterComponent}
+              renderItem={renderItem}
+              keyExtractor={(_, index) => index?.toString()}
+            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -41,4 +64,6 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
   },
+  header: {marginVertical: 20, fontSize: 28, fontFamily: 'Inter-Bold'},
+  footer: {marginBottom: 50},
 });
