@@ -1,5 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React from 'react';
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -13,10 +12,8 @@ import {useSelector} from 'react-redux';
 import Card from '../components/card/Card';
 import SearchCard from '../components/searchCard/SearchCard';
 
-const Home = ({navigation}) => {
-  const [search, setsearch] = useState('');
+const Home = () => {
   const data = useSelector(state => state?.commonReducer?.restoList);
-  // console.log({data});
 
   const renderItem = ({item, index}) => {
     return <Card item={item} index={index} key={index} />;
@@ -36,7 +33,7 @@ const Home = ({navigation}) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.flexOne}>
           <View style={styles.container}>
-            <SearchCard value={search} onChange={e => setsearch(e)} />
+            <SearchCard />
 
             <FlatList
               bounces={false}

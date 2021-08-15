@@ -1,18 +1,16 @@
-/* eslint-disable react-native/no-inline-styles */
+import dayjs from 'dayjs';
 import React, {useState} from 'react';
 import {
+  Image,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  Image,
-  ScrollView,
-  FlatList,
 } from 'react-native';
 import CustomHeader from '../components/customHeader/CustomHeader';
 import Rating from '../components/rating/Rating';
 import Colors from '../utils/colors';
-import dayjs from 'dayjs';
 
 const Details = ({route}) => {
   const {data} = route?.params;
@@ -20,7 +18,7 @@ const Details = ({route}) => {
 
   const renderItem = (item, index) => {
     return (
-      <View style={styles.renderItem}>
+      <View key={index} style={styles.renderItem}>
         <View style={styles.nameAndDate}>
           <Text style={styles.reviewerName}>{item?.name}</Text>
           <Text style={styles.reviewDate}>{item?.date}</Text>

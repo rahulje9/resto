@@ -1,19 +1,11 @@
 import React from 'react';
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
-const SearchCard = ({value = '', onChange}) => {
+const SearchCard = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.searchIcon}>🔍</Text>
-      <TextInput
-        style={styles.input}
-        value={value}
-        onChangeText={e => {
-          onChange && onChange(e);
-        }}
-        maxLength={15}
-        placeholder="Search..."
-      />
+      <Text style={styles.input}>Search...</Text>
     </View>
   );
 };
